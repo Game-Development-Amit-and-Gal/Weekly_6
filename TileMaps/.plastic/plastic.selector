@@ -1,4 +1,0 @@
-repository "TileMaps/TileMaps@18968324725307@cloud"
-  path "/"
-    br "/main"
-    co "/main"
