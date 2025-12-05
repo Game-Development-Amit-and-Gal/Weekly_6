@@ -1,33 +1,34 @@
 ﻿using UnityEngine;
+using State = UnityEngine.MonoBehaviour;
 
 public class EnemyStateMachine : StateMachine
 {
+    [Header("Chase Settings")]
     [SerializeField] private Transform player;
-    [SerializeField] private float chaseRadius;
+    [SerializeField] private float chaseRadius = 2f;
 
-    private PatrolState patrol;
-    private ChaseState chase;
+    [Header("States")]
+    [SerializeField] private State patrolState;   // <- ANY patrol script
+    [SerializeField] private State chaseState;    // <- your ChaseState
 
     private void Awake()
     {
-        patrol = GetComponent<PatrolState>();
-        chase = GetComponent<ChaseState>();
+        if (patrolState != null) AddState(patrolState);
+        if (chaseState != null) AddState(chaseState);
 
-        this
-            .AddState(patrol)
-            .AddState(chase)
-            .AddTransition(
-                patrol,
-                () => Vector3.Distance(transform.position, player.position) <= chaseRadius,
-                chase)
-            .AddTransition(
-                chase,
-                () => Vector3.Distance(transform.position, player.position) > chaseRadius,
-                patrol);
+        if (patrolState != null && chaseState != null)
+        {
+            AddTransition(patrolState, PlayerInChaseRange, chaseState);
+            AddTransition(chaseState, () => !PlayerInChaseRange(), patrolState);
+        }
     }
 
-    private void Start()
+    private void Start() => Initialize(); // Call to Parent to Initialize
+
+    private bool PlayerInChaseRange()
     {
-        Initialize();   // ← SAFE. Now states exist BEFORE running FSM.
+        if (!player) return false;
+        var d = player.position - transform.position; // Distance between enemy and player
+        return d.sqrMagnitude <= chaseRadius * chaseRadius; // Compare squared distances for efficiency
     }
 }

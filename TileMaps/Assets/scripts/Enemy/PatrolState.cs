@@ -11,7 +11,7 @@ public class PatrolState : MonoBehaviour
     [SerializeField] private RandomEnemySpawnPoints spawner;
 
     // Start index must be a serialized field to avoid magic numbers
-    [SerializeField] private int startingIndex;
+    [SerializeField] private int startingIndex = 0;
 
     private Vector3[] patrolPoints = System.Array.Empty<Vector3>();
     private int currentIndex;
@@ -25,7 +25,7 @@ public class PatrolState : MonoBehaviour
         EnsureValidPoints();
 
         // Reset index without using literal 0
-        currentIndex = startingIndex - startingIndex;
+        currentIndex = startingIndex;
     }
 
     private void Update()

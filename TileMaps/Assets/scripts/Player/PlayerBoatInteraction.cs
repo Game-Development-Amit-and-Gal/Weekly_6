@@ -1,109 +1,112 @@
+using Unity.Hierarchy;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// ... (Documentation and Configuration are the same) ...
-
 public class PlayerBoatInteraction : MonoBehaviour
 {
-    // ---------------- CONFIGURATION ----------------
-    [Tooltip("Radius around the player used to detect nearby boat objects.")]
-    [SerializeField] private float detectRadius = 1f;
-
-    [Tooltip("Time in seconds to block re-entering the boat immediately after dismounting.")]
-    [SerializeField] private float exitCooldownTime = 0.2f; // <-- NEW FIELD
-
-    // ... (Other serialized fields are the same) ...
-    [SerializeField] private Transform playerTransform;
+    [Header("Detection")]
+    [SerializeField] private float detectRadius = 1.2f;
     [SerializeField] private Transform boatTransform;
-    [SerializeField] private Vector3 mountOffset = Vector3.up * 0.5f;
 
-    // ---------------- CONSTANTS ----------------
-    private const float INITIAL_INTERACTION_DELAY = 0.2f;
-    private const string INTERACT_ACTION_NAME = "Interact";
+    [Header("Mount Settings")]
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Vector3 mountOffset = new Vector3(0f, 1f, 0f);
 
-    // ---------------- PRIVATE FIELDS ----------------
-    private InputAction interactAction;
+    [Header("Input")]
+    [SerializeField] private InputAction interactAction;  // bind to <Keyboard>/f in Inspector
+
     private bool isMounted = false;
-    private bool interactPressed = false;
-    private bool allowInteraction = false;
-    private Vector3 initialWorldPosition;
 
-    private float exitTime = 0f; // <-- NEW TRACKER
+    private const float debounceTime = 0.15f;
+    private const float initialDelay = 0.2f;
 
-    // ---------------- UNITY LIFECYCLE ----------------
-    // ... (Awake, Start, OnEnable, OnDisable, Update methods are the same) ...
+    private float enableTime;
+    private bool inputCooldown = false;
+    private bool inBoat = false;
 
-    // ---------------- PUBLIC INTERFACE ----------------
-
-    /// <summary>
-    /// Checks if the player is near a boat and pressed the interact key to initiate mounting.
-    /// Uses a simple distance check instead of physics detection.
-    /// </summary>
-    /// <returns>True if the transition to BoatState should occur.</returns>
-    public bool ShouldEnterBoat()
+    public bool isInBoat => inBoat;
+    private void Awake()
     {
-        if (!allowInteraction) return false;
-        if (isMounted) return false;
+        if (playerTransform != null)
+            playerTransform.SetParent(null, true);
+    }
 
-        // --- COOLDOWN CHECK ---
-        if (Time.time < exitTime)
+    private void OnEnable()
+    {
+        interactAction.Enable();
+        enableTime = Time.time;
+    }
+
+    private void OnDisable()
+    {
+        interactAction.Disable();
+    }
+
+    // ---------- TRANSITIONS ----------
+
+    public bool ShouldEnterBoat()
+    {
+        // TEMP DEBUG VERSION
+        bool pressed = interactAction.WasPerformedThisFrame();
+        float dist = Vector2.Distance(playerTransform.position, boatTransform.position);
+
+        Debug.Log($"ENTER check | pressed={pressed} | dist={dist}");
+
+        // For now: if F was pressed AND we are within radius, allow enter
+        if (pressed && dist <= detectRadius)
         {
-            // Ignore entry attempts immediately after a dismount
-            return false;
-        }
-        // ----------------------
-
-        float distanceToBoat = Vector3.Distance(playerTransform.position, boatTransform.position);
-        bool nearBoat = distanceToBoat <= detectRadius;
-
-        if (nearBoat && interactPressed)
-        {
-            Debug.Log("Transition SUCCESS (Distance Check): Near Boat and Interact Pressed.");
+            Debug.Log("ENTER condition TRUE");
             return true;
         }
 
-        // ... (Debug logging for failure is the same) ...
+        return false;
+    }
+
+    public bool ShouldExitBoat()
+    {
+        // TEMP DEBUG VERSION
+        bool pressed = interactAction.WasPerformedThisFrame();
+        Debug.Log($"EXIT check | pressed={pressed} | mounted={isMounted}");
+
+        if (isMounted && pressed)
+        {
+            Debug.Log("EXIT condition TRUE");
+            return true;
+        }
 
         return false;
     }
 
 
-    /// <summary>
-    /// Checks if player pressed interact while mounted, meaning we should exit the boat.
-    /// </summary>
-    /// <returns>True if the transition back to WalkState should occur.</returns>
-    public bool ShouldExitBoat()
-    {
-        if (isMounted && interactPressed)
-        {
-            Debug.Log("Dismount SUCCESS: Mounted and Interact Pressed.");
-            return true;
-        }
-        return false;
-    }
+    // ---------- ACTIONS ----------
 
-    // ... (MountBoat method is the same) ...
     public void MountBoat()
     {
         isMounted = true;
+        StartCooldown();
+
         playerTransform.position = boatTransform.position + mountOffset;
-        Debug.Log("Player MOUNTED onto boat.");
+        Debug.Log("Mounted boat");
     }
 
-
-    /// <summary>
-    /// Performs the actual dismount operation: updates state.
-    /// </summary>
-    public void DismountBoat()
+    public void DismountBoat()
     {
         isMounted = false;
-        // RECORD THE TIME OF EXIT
-        exitTime = Time.time + exitCooldownTime; // <-- NEW LOGIC
-        Debug.Log("Player DISMOUNTED boat.");
+        StartCooldown();
+
+        playerTransform.position = boatTransform.position - mountOffset;
+        Debug.Log("Dismounted boat");
     }
 
-    public Transform getBoat
+    private float delay = 1000f;
+    private async void StartCooldown()
     {
-        get { return boatTransform; }
+        inputCooldown = true;
+        await System.Threading.Tasks.Task.Delay((int)(debounceTime * delay)); 
+        inputCooldown = false;
     }
+
+    public bool IsMounted => isMounted;
+    public Transform Boat => boatTransform;
+    public Vector3 MountOffset => mountOffset;
 }

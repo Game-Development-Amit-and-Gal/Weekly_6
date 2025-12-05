@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class RandomEnemySpawnPoints : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap;
-    [SerializeField] private TileBase grassTile;
+    [SerializeField] private List<TileBase> allowed = new List<TileBase>();
 
     [SerializeField] private int spawnCount = 3;
 
@@ -26,7 +26,7 @@ public class RandomEnemySpawnPoints : MonoBehaviour
         foreach (var pos in bounds.allPositionsWithin)
         {
             TileBase t = tilemap.GetTile(pos);
-            if (t == grassTile)
+            if (allowed.Contains(t))
                 validCells.Add(pos);
         }
 
