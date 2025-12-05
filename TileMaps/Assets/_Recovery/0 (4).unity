@@ -119,6 +119,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10067975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10067976}
+  m_Layer: 0
+  m_Name: PointTP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &10067976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10067975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416196794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &196673413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196673414}
+  m_Layer: 0
+  m_Name: PointTP (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196673414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196673413}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.14, y: 4.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416196794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 847843696}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6, y: -1.45, z: 0}
+  m_LocalPosition: {x: -3.625, y: -1.445, z: 0}
   m_LocalScale: {x: 0.124865, y: 0.120588, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -557,6 +619,7 @@ MonoBehaviour:
   chaseSpeed: 1
   player: {fileID: 1467202498}
   bfs: {fileID: 847843697}
+  tilemap: {fileID: 1816422618}
   timeFactor: 1
 --- !u!114 &847843703
 MonoBehaviour:
@@ -607,6 +670,7 @@ GameObject:
   - component: {fileID: 939044895}
   - component: {fileID: 939044894}
   - component: {fileID: 939044893}
+  - component: {fileID: 939044902}
   m_Layer: 0
   m_Name: EnemyFixedPatroler
   m_TagString: Untagged
@@ -645,6 +709,7 @@ MonoBehaviour:
   chaseSpeed: 1
   player: {fileID: 1467202498}
   bfs: {fileID: 939044899}
+  tilemap: {fileID: 1816422618}
   timeFactor: 1
 --- !u!114 &939044895
 MonoBehaviour:
@@ -771,8 +836,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 4468232750787976011, guid: 5cde383166cf4154d8334d8b87c3f538, type: 3}
-  m_Color: {r: 0.22652824, g: 0.9433962, b: 0, a: 1}
+  m_Sprite: {fileID: 8586087304088146999, guid: 1322400644d278b4583e9e5550d40227, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -797,6 +862,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &939044902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939044892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889a06ea1a5c6d64ab2d81363116e07e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  breathDurationSeconds: 2
+  amplitude: 0.1
+  harmonicCount: 2
 --- !u!1 &947450088
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,8 +924,9 @@ GameObject:
   - component: {fileID: 1212512525}
   - component: {fileID: 1212512524}
   - component: {fileID: 1212512523}
+  - component: {fileID: 1212512531}
   m_Layer: 0
-  m_Name: EnemyWalkOnWater
+  m_Name: EnemyTeleport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,9 +944,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f797aa3ffa950664e8209efa4b51e32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  chaseSpeed: 1
+  chaseSpeed: 3
   player: {fileID: 1467202498}
   bfs: {fileID: 1212512528}
+  tilemap: {fileID: 1816422618}
   timeFactor: 1
 --- !u!114 &1212512524
 MonoBehaviour:
@@ -879,7 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061a9559f67e9754e9824e6fed074d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  patrolSpeed: 1
+  patrolSpeed: 3
   arriveThreshold: 0.1
   spawner: {fileID: 1212512527}
   startingIndex: 0
@@ -897,7 +979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 1467202498}
   chaseRadius: 2
-  patrolState: {fileID: 1212512524}
+  patrolState: {fileID: 1212512531}
   chaseState: {fileID: 1212512523}
 --- !u!114 &1212512526
 MonoBehaviour:
@@ -1018,6 +1100,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1212512531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212512522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88a76755946af40b7eb5e854a7472b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportPatrol
+  patrolPoints:
+  - {fileID: 10067976}
+  - {fileID: 1691755368}
+  - {fileID: 196673414}
+  teleportDelay: 2
 --- !u!1 &1302541829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,6 +1162,40 @@ Transform:
   - {fileID: 1816422616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1416196793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416196794}
+  m_Layer: 0
+  m_Name: Teleportation points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1416196794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416196793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.46053, y: -0.74906, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 10067976}
+  - {fileID: 1691755368}
+  - {fileID: 196673414}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1467202495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1207,8 @@ GameObject:
   - component: {fileID: 1467202498}
   - component: {fileID: 1467202497}
   - component: {fileID: 1467202496}
+  - component: {fileID: 1467202500}
+  - component: {fileID: 1467202499}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1155,9 +1290,8 @@ MonoBehaviour:
   tilemap: {fileID: 1816422618}
   AllowedTiles:
   - {fileID: 11400000, guid: 8953537db6a366f42b79615f3d50e5d5, type: 2}
-  boatInteraction: {fileID: 0}
-  hasGoat: 0
-  hasPickaxe: 0
+  - {fileID: 11400000, guid: f9992fac9f5b06348b55a534efae9514, type: 2}
+  tileCost: {fileID: 1816422619}
 --- !u!4 &1467202498
 Transform:
   m_ObjectHideFlags: 0
@@ -1173,6 +1307,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1467202499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467202495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4144d8aece7179147a2a1052512f2f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  map: {fileID: 0}
+  costProvider: {fileID: 0}
+--- !u!114 &1467202500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467202495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f4d48f89f66004fbd91bf0033813eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  tilemap: {fileID: 1816422618}
+  cost: {fileID: 1816422619}
+  moveSpeed: 2
+--- !u!1 &1691755367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1691755368}
+  m_Layer: 0
+  m_Name: PointTP (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1691755368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691755367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.61, y: -3.03, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416196794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1816422615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,6 +1378,7 @@ GameObject:
   - component: {fileID: 1816422616}
   - component: {fileID: 1816422618}
   - component: {fileID: 1816422617}
+  - component: {fileID: 1816422619}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -1200,8 +1395,8 @@ Transform:
   m_GameObject: {fileID: 1816422615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.0245, y: -0.0313, z: 0}
+  m_LocalScale: {x: 0.89798874, y: 0.9882947, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1302541831}
@@ -2731,6 +2926,28 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1816422619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816422615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91278656d92557d4baec6f06e19c493f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  tilemap: {fileID: 1816422618}
+  tileCosts:
+  - tile: {fileID: 0}
+    cost: 0
+  - tile: {fileID: 11400000, guid: 8953537db6a366f42b79615f3d50e5d5, type: 2}
+    cost: 1
+  - tile: {fileID: 11400000, guid: f9992fac9f5b06348b55a534efae9514, type: 2}
+    cost: 3
+  - tile: {fileID: 11400000, guid: 442b6ab57625441479f93d3c54930384, type: 2}
+    cost: 0
 --- !u!1 &1942915277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,3 +2994,4 @@ SceneRoots:
   - {fileID: 939044901}
   - {fileID: 1467202498}
   - {fileID: 1942915278}
+  - {fileID: 1416196794}

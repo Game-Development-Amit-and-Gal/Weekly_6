@@ -12,12 +12,10 @@ public class BoatState : MonoBehaviour
     private void OnEnable()
     {
         mover.enabled = true;
-        mover.SetMoveSpeed(boatSpeed);
     }
 
     private void OnDisable()
     {
-        mover.SetMoveSpeed(walkSpeed);
     }
 
     private void LateUpdate()

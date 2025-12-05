@@ -102,7 +102,7 @@ public class PlayerBoatInteraction : MonoBehaviour
     private async void StartCooldown()
     {
         inputCooldown = true;
-        await System.Threading.Tasks.Task.Delay((int)(debounceTime * delay)); 
+        await System.Threading.Tasks.Task.Delay((int)(debounceTime * delay));
         inputCooldown = false;
     }
 

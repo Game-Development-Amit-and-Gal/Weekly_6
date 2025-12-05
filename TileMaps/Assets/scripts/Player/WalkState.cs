@@ -8,6 +8,5 @@ public class WalkState : MonoBehaviour
     private void OnEnable()
     {
         mover.enabled = true;
-        mover.SetMoveSpeed(walkSpeed);
     }
 }

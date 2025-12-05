@@ -5,7 +5,7 @@ public class FixedPatroller : MonoBehaviour
     [SerializeField] private Transform[] route;
     private int currentTargetIndex = 0;
     private float epsilon = 0.1f;
-  
+
 
 
     private void Update()

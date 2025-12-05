@@ -19,10 +19,16 @@ public class EnemyChaseBFS : MonoBehaviour
     private static readonly Vector3Int Right = new Vector3Int(1, 0, 0);
     private static readonly Vector3Int[] Directions = { Up, Down, Left, Right };
 
+
+
     /// <summary>
     /// Returns the next world position (one tile) toward the player.
     /// If no path exists, returns current position.
     /// </summary>
+    /// 
+
+
+    public Tilemap getTile => tilemap;
     public Vector3 GetNextStepTowardsPlayer()
     {
         Vector3Int start = tilemap.WorldToCell(transform.position);
@@ -76,6 +82,9 @@ public class EnemyChaseBFS : MonoBehaviour
     private bool IsWalkable(Vector3Int cell)
     {
         TileBase t = tilemap.GetTile(cell);
+        Debug.Log("Checking tile: " + t + " at " + cell);
+
         return allowed.Contains(t);
     }
+
 }
