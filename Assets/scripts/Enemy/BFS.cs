@@ -28,36 +28,36 @@ public class EnemyChaseBFS : MonoBehaviour
     /// 
 
 
-    public Tilemap getTile => tilemap;
-    public Vector3 GetNextStepTowardsPlayer()
+    public Tilemap getTile => tilemap; // Getter for the tilemap
+    public Vector3 GetNextStepTowardsPlayer() // Method to get the next step towards the player using BFS
     {
-        Vector3Int start = tilemap.WorldToCell(transform.position);
-        Vector3Int target = tilemap.WorldToCell(player.position);
+        Vector3Int start = tilemap.WorldToCell(transform.position); // Convert enemy's world position to tilemap cell
+        Vector3Int target = tilemap.WorldToCell(player.position); // Convert player's world position to tilemap cell
 
-        if (start == target)
-            return transform.position;
+        if (start == target) // Already at player
+            return transform.position; // Return current position
 
-        var queue = new Queue<Vector3Int>();
-        var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
+        var queue = new Queue<Vector3Int>(); // Queue for BFS
+        var cameFrom = new Dictionary<Vector3Int, Vector3Int>(); // To reconstruct the path
 
-        queue.Enqueue(start);
-        cameFrom[start] = start;
+        queue.Enqueue(start); // Enqueue starting position
+        cameFrom[start] = start; // Mark start as visited
 
-        while (queue.Count > 0)
+        while (queue.Count > 0) // BFS loop
         {
-            Vector3Int current = queue.Dequeue();
+            Vector3Int current = queue.Dequeue(); // Dequeue the next position
 
-            foreach (Vector3Int dir in Directions)
+            foreach (Vector3Int dir in Directions) // Explore each direction
             {
-                Vector3Int next = current + dir;
+                Vector3Int next = current + dir; // Calculate the next position
 
-                if (!cameFrom.ContainsKey(next) && IsWalkable(next))
+                if (!cameFrom.ContainsKey(next) && IsWalkable(next)) // If not visited and walkable
                 {
-                    cameFrom[next] = current;
-                    queue.Enqueue(next);
+                    cameFrom[next] = current; // Mark as visited
+                    queue.Enqueue(next); // Enqueue the next position
 
-                    if (next == target)
-                        return ReconstructFirstStep(start, target, cameFrom);
+                    if (next == target) // Reached the target
+                        return ReconstructFirstStep(start, target, cameFrom); //    Reconstruct and return the first step
                 }
             }
         }
@@ -69,22 +69,22 @@ public class EnemyChaseBFS : MonoBehaviour
     private Vector3 ReconstructFirstStep(
         Vector3Int start,
         Vector3Int target,
-        Dictionary<Vector3Int, Vector3Int> cameFrom)
+        Dictionary<Vector3Int, Vector3Int> cameFrom) // Method to reconstruct the first step from start to target using the cameFrom dictionary
     {
-        Vector3Int current = target;
+        Vector3Int current = target; // Start from the target
 
-        while (cameFrom[current] != start)
-            current = cameFrom[current];
+        while (cameFrom[current] != start) // Backtrack until reaching the start position  
+            current = cameFrom[current]; // Move to the previous position
 
-        return tilemap.GetCellCenterWorld(current);
+        return tilemap.GetCellCenterWorld(current); // Return the world position of the first step
     }
 
-    private bool IsWalkable(Vector3Int cell)
+    private bool IsWalkable(Vector3Int cell) // Method to check if a tile at a given cell is walkable
     {
-        TileBase t = tilemap.GetTile(cell);
-        Debug.Log("Checking tile: " + t + " at " + cell);
+        TileBase t = tilemap.GetTile(cell); // Get the tile at the specified cell
+        Debug.Log("Checking tile: " + t + " at " + cell); // Debug log to check the tile being evaluated
 
-        return allowed.Contains(t);
+        return allowed.Contains(t); // Return true if the tile is in the allowed list
     }
 
 }

@@ -22,11 +22,11 @@ public class ChaseState : MonoBehaviour
 
     /// <summary>Scaling factor for delta-time movement.</summary>
     [SerializeField] private float timeFactor = 1f;
-    private Vector3 lastStep;
+    private Vector3 lastStep; // To track the last step taken
 
-    private void Update()
+    private void Update() 
     {
-        if (player == null || bfs == null || tilemap == null)
+        if (player == null || bfs == null || tilemap == null) // Safety check
         {
             return;
         }
@@ -40,25 +40,26 @@ public class ChaseState : MonoBehaviour
                 transform.position,
                 next,
                 chaseSpeed * Time.deltaTime
-            );
+            ); // Move towards the next step
 
-            lastStep = next;
+            lastStep = next; // Update last step
         }
 
         // --- 2. Check if enemy and player are on the SAME TILE ---
-        Vector3Int enemyCell = tilemap.WorldToCell(transform.position);
-        Vector3Int playerCell = tilemap.WorldToCell(player.position);
+        Vector3Int enemyCell = tilemap.WorldToCell(transform.position); // Current cell of the enemy
+        Vector3Int playerCell = tilemap.WorldToCell(player.position); // Current cell of the player
 
-        Vector3Int currentCell2 = bfs.getTile.WorldToCell(transform.position);
-        Vector3Int nextCell2 = bfs.getTile.WorldToCell(next);
 
-        if (nextCell2 != currentCell2)
+        Vector3Int currentCell2 = bfs.getTile.WorldToCell(transform.position); // Current cell of the enemy
+        Vector3Int nextCell2 = bfs.getTile.WorldToCell(next); // Next cell from BFS
+
+        if (nextCell2 != currentCell2) // If the next cell is different from the current cell
         {
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 next,
                 chaseSpeed * Time.deltaTime
-            );
+            ); // Move towards the next step
         }
 
         if (enemyCell == playerCell)
@@ -71,12 +72,12 @@ public class ChaseState : MonoBehaviour
     /// Called when the enemy reaches the same tile as the player.
     /// Replace with your own death / game-over logic as needed.
     /// </summary>
-    private void KillPlayer()
+    private void KillPlayer() // method to kill the player
     {
         // Example: destroy the player object
         if (player != null)
         {
-            Destroy(player.gameObject);
+            Destroy(player.gameObject); // Destroy the player object if it exists.
         }
 
         Debug.Log("Player caught by enemy!");
